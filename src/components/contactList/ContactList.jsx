@@ -1,8 +1,14 @@
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContacts } from 'redux/contactsSlice';
-import { getContacts, getFilter } from 'redux/selectors';
+import {
+  getContacts,
+  getError,
+  getFilter,
+  getIsLoading,
+} from 'redux/selectors';
+import { useEffect } from 'react';
+import { deleteContacts, fetchContacts } from 'redux/operations';
 
 const getVisibleContacts = (contacts, filter) => {
   return contacts.filter(({ name }) =>
@@ -12,25 +18,35 @@ const getVisibleContacts = (contacts, filter) => {
 
 export const ContactList = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
   const visibleContacts = getVisibleContacts(contacts, filter);
   return (
-    <ul className={css.contactList}>
-      {visibleContacts.map(contact => (
-        <li className={css.contactItem} key={contact.id}>
-          <p className={css.contactText}>
-            {contact.name}: {contact.number}
-          </p>
-          <button
-            className={css.contactButton}
-            onClick={() => dispatch(deleteContacts(contact.id))}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {isLoading && !error && <b>Request in progress...</b>}
+      <ul className={css.contactList}>
+        {visibleContacts.map(contact => (
+          <li className={css.contactItem} key={contact.id}>
+            <p className={css.contactText}>
+              {contact.name}: {contact.number}
+            </p>
+            <button
+              className={css.contactButton}
+              onClick={() => dispatch(deleteContacts(contact.id))}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

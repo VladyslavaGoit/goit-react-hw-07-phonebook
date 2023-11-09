@@ -40,7 +40,7 @@ export const contactsSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [deleteContacts.pending](state, action) {
+    [deleteContacts.pending](state) {
       state.isLoading = true;
     },
     [deleteContacts.fulfilled](state, action) {

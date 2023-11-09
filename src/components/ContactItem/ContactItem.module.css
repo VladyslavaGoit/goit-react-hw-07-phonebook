@@ -1,9 +1,3 @@
-.contactList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
 .contactItem {
   display: flex;
   justify-content: space-between;

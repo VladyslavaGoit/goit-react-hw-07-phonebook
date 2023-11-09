@@ -19,11 +19,12 @@ const ContactForm = () => {
       evt.target.reset();
       return alert(`${newName} is already in contacts`);
     }
-    const contact = {
-      name: newName,
-      number: newNumber,
-    };
-    dispatch(addContacts(contact));
+    dispatch(
+      addContacts({
+        name: newName,
+        phone: newNumber,
+      })
+    );
     evt.target.reset();
   };
 

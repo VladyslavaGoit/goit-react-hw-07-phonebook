@@ -1,6 +1,6 @@
 .contactList {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 10px;
 }
 
@@ -11,8 +11,4 @@
 
   margin-bottom: 10px;
   width: 300px;
-}
-
-.contactButton {
-  padding: 2px 10px;
 }
